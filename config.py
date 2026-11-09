@@ -24,6 +24,9 @@ BASE_URL = "http://localhost"
 
 # ── paths ─────────────────────────────────────────────────────────────
 CONTENT_DIR = ROOT / "content"
+# Standalone pages (e.g. about.md). Kept separate so the post loader,
+# which globs content/*.md, never treats them as articles.
+PAGES_DIR = CONTENT_DIR / "pages"
 DATA_DIR = ROOT / "data"
 DATABASE_PATH = DATA_DIR / "blog.sqlite"
 

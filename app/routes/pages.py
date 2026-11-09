@@ -5,7 +5,7 @@ from __future__ import annotations
 from flask import Blueprint, abort, render_template
 
 import config
-from app.services import metrics, posts, stats
+from app.services import content_pages, metrics, posts, stats
 
 bp = Blueprint("pages", __name__)
 
@@ -39,6 +39,14 @@ def post_detail(slug: str):
         abort(404)
     metric = metrics.get_metrics(slug)
     return render_template("post.html", post=post, metric=metric)
+
+
+@bp.get("/about/")
+def about():
+    page = content_pages.load_page("about")
+    if not page:
+        abort(404)
+    return render_template("page.html", page=page)
 
 
 @bp.get("/archive/")

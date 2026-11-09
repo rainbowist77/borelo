@@ -93,6 +93,7 @@ summary: 可选摘要
 |------|------|
 | `/` | 首页（书封 + 近作） |
 | `/post/<slug>/` | 文章 |
+| `/about/` | 关于页，内容取自 `content/pages/about.md` |
 | `/archive/` | 归档，按年月分组 |
 | `/categories/`、`/category/<name>/` | 分类 |
 | `/tags/`、`/tag/<name>/` | 标签 |
@@ -100,6 +101,16 @@ summary: 可选摘要
 | `/api/view/<slug>` | 记一次阅读（POST） |
 | `/api/like/<slug>` | 记一次点赞（POST） |
 | `/api/metrics/<slug>` | 读取当前计数 |
+
+## 关于页
+
+`/about/` 是一个独立的 Markdown 页面，与文章流分开：
+
+```
+content/pages/about.md
+```
+
+放在 `content/pages/` 而非 `content/` 根下，是因为文章加载器只扫描 `content/*.md`，子目录里的文件不会被当成文章列进首页、归档或 Atom。改这个文件后刷新即可，页面的 mtime 缓存会感知到变更。
 
 ## 数据
 
@@ -120,8 +131,20 @@ summary: 可选摘要
 相关文件：
 
 - `static/css/main.css` —— 全部样式，按区块注释组织
+- `static/js/home.js` —— 封面视差与首页条目入场
 - `templates/index.html` —— 封面与近作列表
 - `templates/post.html` —— 文章页
+
+### 动效
+
+首页有两处动效，都不依赖动画库：
+
+- **封面**：雾面人影缓慢漂浮，街面的灯光反射各自呼吸。这两组是纯 CSS 关键帧，跑在合成器线程上，不占主线程。鼠标移动时，`home.js` 再叠加一层视差 —— 它写的是 `translate` 这个独立属性，而不是覆盖 `transform`，因此能和 CSS 动画叠加而不打架，位移由 `transition` 插值，指针静止时没有任何循环在跑。
+- **近作条目**：滚动进入视口时淡入上浮，`IntersectionObserver` 触发后即取消观察。前几条按 90ms 错峰，超出四条不再累加延迟。
+
+两者都遵循 `prefers-reduced-motion`：关闭后动画被压到最短，条目直接可见。
+
+另有 `no-js` 兜底：`<html>` 初始带 `no-js` 类，`<head>` 里的内联脚本立刻移除它。若脚本被禁用，条目不会因为等不到 `.is-visible` 而一直隐形。
 
 封面高度用 `min(100svh, 58rem)` 封顶。不设上限的话，在超长视口下雾面与人影会被拉伸成无法辨认的色块。
 

@@ -97,3 +97,6 @@
   {% include 'partials/site_stats.html' %}
 </div>
 {% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/home.js') }}" defer></script>
+{% endblock %}
