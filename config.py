@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parent
 
 SITE_NAME = "borelo"
 SITE_AUTHOR = "borelo"
-SITE_DESCRIPTION = "文字与影子之间的个人笔记"
+SITE_DESCRIPTION = "文字与影子之间"
 SITE_LAUNCHED = date(2026, 11, 9)
 BASE_URL = "http://localhost"
 TIMEZONE = "Asia/Shanghai"

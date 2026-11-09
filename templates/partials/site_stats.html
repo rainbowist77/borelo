@@ -1,11 +1,13 @@
 <footer class="site-footer">
-  <p class="footer-brand">{{ site_name }}</p>
-  <ul class="stats" aria-label="站点统计">
-    <li><span class="stats-label">文章</span><span class="stats-value">{{ site_stats.post_count }}</span></li>
-    <li><span class="stats-label">分类</span><span class="stats-value">{{ site_stats.category_count }}</span></li>
-    <li><span class="stats-label">标签</span><span class="stats-value">{{ site_stats.tag_count }}</span></li>
-    <li><span class="stats-label">总字数</span><span class="stats-value">{{ site_stats.total_words }}</span></li>
-    <li><span class="stats-label">运行</span><span class="stats-value">{{ site_stats.runtime_days }} 天</span></li>
-    <li><span class="stats-label">最后活动</span><span class="stats-value">{{ site_stats.last_activity }}</span></li>
-  </ul>
+  <div class="footer-inner">
+    <p class="footer-brand">{{ site_name }}</p>
+    <ul class="stats" aria-label="站点统计">
+      <li><span class="stats-label">文章</span><span class="stats-value">{{ site_stats.post_count }}</span></li>
+      <li><span class="stats-label">分类</span><span class="stats-value">{{ site_stats.category_count }}</span></li>
+      <li><span class="stats-label">标签</span><span class="stats-value">{{ site_stats.tag_count }}</span></li>
+      <li><span class="stats-label">总字数</span><span class="stats-value">{{ site_stats.total_words }}</span></li>
+      <li><span class="stats-label">运行</span><span class="stats-value">{{ site_stats.runtime_days }} 天</span></li>
+      <li><span class="stats-label">最后活动</span><span class="stats-value">{{ site_stats.last_activity }}</span></li>
+    </ul>
+  </div>
 </footer>

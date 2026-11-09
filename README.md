@@ -73,4 +73,4 @@ summary: 可选摘要
 | `/feed.atom` | Atom 订阅 |
 | `/api/view/<slug>`、`/api/like/<slug>` | 观看 / 点赞 |
 
-浅色 / 深色模式由页眉按钮切换，偏好保存在浏览器 `localStorage`。
+视觉固定为参考封面的分屏文学气质（上雾下夜、中央标题方块），不做浅深色切换。

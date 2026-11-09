@@ -3,24 +3,24 @@
 {% block description %}{{ post.summary }}{% endblock %}
 {% block content %}
 <article class="post" data-slug="{{ post.slug }}">
-  <header class="post-header">
-    <div class="post-meta-rail vertical">
+  <header class="post-mast">
+    <div class="post-rail" aria-hidden="true">
       <span>{{ post.date_iso }}</span>
       {% if post.categories %}
-        <span>{{ post.categories | join(' / ') }}</span>
+      <span>{{ post.categories | join(' · ') }}</span>
       {% endif %}
     </div>
-    <div>
-      <p class="eyebrow">{{ site_name }}</p>
+    <div class="post-mast-main">
+      <p class="mast-brand">{{ site_name }}</p>
       <h1>{{ post.title }}</h1>
       <p class="post-meta">
         <time datetime="{{ post.date_iso }}">{{ post.date_iso }}</time>
-        <span class="muted"> · {{ post.word_count }} 字</span>
+        <span>· {{ post.word_count }} 字</span>
       </p>
       {% if post.tags %}
       <p class="post-tags">
         {% for t in post.tags %}
-          <a href="{{ url_for('pages.tag_detail', name=t) }}">#{{ t }}</a>
+          <a href="{{ url_for('pages.tag_detail', name=t) }}">{{ t }}</a>{% if not loop.last %} · {% endif %}
         {% endfor %}
       </p>
       {% endif %}
