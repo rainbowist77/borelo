@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ site_name }}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{{ site_description }}{% endblock %}">
+  <link rel="alternate" type="application/atom+xml" title="{{ site_name }}" href="{{ url_for('feed.atom_feed') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  <div class="grain" aria-hidden="true"></div>
+
+  {% block shell %}
+  <div class="shell">
+    <header class="topbar">
+      <a class="topbar-brand" href="{{ url_for('pages.index') }}">{{ site_name }}</a>
+      {% include 'partials/nav.html' %}
+    </header>
+    <main class="main">
+      {% block content %}{% endblock %}
+    </main>
+    {% include 'partials/site_stats.html' %}
+  </div>
+  {% endblock %}
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

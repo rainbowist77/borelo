@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}{{ site_name }}{% endblock %}
+{% block body_class %}is-home{% endblock %}
+{% block shell %}
+<section class="cover" aria-label="{{ site_name }}">
+  <div class="cover-media" aria-hidden="true">
+    <div class="cover-half cover-half-top">
+      <div class="mist"></div>
+      <div class="silhouette"></div>
+    </div>
+    <div class="cover-half cover-half-bottom">
+      <div class="street-glow"></div>
+      <div class="walkers"></div>
+      <div class="reflection"></div>
+    </div>
+    <div class="cover-grain"></div>
+  </div>
+
+  <header class="cover-top">
+    <a class="cover-home" href="{{ url_for('pages.index') }}">{{ site_name }}</a>
+    {% include 'partials/nav.html' %}
+  </header>
+
+  <div class="cover-stage">
+    <div class="title-plate">
+      <div class="plate-rail" aria-hidden="true">
+        <span>作者</span>
+        <span>{{ site_author }}</span>
+      </div>
+      <div class="plate-core">
+        <h1 class="plate-title">{{ site_name }}</h1>
+        <p class="plate-latin">{{ site_author | upper }}</p>
+      </div>
+    </div>
+    <p class="cover-sub">{{ site_description }}</p>
+    <a class="cover-cta" href="#entries">阅读文章</a>
+  </div>
+</section>
+
+<div class="after-cover">
+  <main class="main main-home" id="entries">
+    <section class="entries" aria-label="最新文章">
+      <header class="entries-head">
+        <p class="entries-kicker">Recent</p>
+        <h2>近作</h2>
+      </header>
+
+      {% if posts %}
+        {% for post in posts %}
+        <article class="entry">
+          <div class="entry-rail" aria-hidden="true">{{ post.date_iso }}</div>
+          <div class="entry-main">
+            <h3><a href="{{ url_for('pages.post_detail', slug=post.slug) }}">{{ post.title }}</a></h3>
+            <p class="entry-summary">{{ post.summary }}</p>
+            <p class="entry-meta">
+              {% if post.categories %}
+                {% for c in post.categories %}
+                  <a href="{{ url_for('pages.category_detail', name=c) }}">{{ c }}</a>{% if not loop.last %} / {% endif %}
+                {% endfor %}
+              {% endif %}
+              {% if metrics.get(post.slug) %}
+                <span>· {{ metrics[post.slug].views }} 次阅读</span>
+              {% endif %}
+            </p>
+          </div>
+        </article>
+        {% endfor %}
+      {% else %}
+        <p class="empty">尚无文章。将 Markdown 放入 <code>content/</code> 后刷新即可。</p>
+      {% endif %}
+    </section>
+  </main>
+  {% include 'partials/site_stats.html' %}
+</div>
+{% endblock %}

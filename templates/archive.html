@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}归档 · {{ site_name }}{% endblock %}
+{% block content %}
+<section class="section-head">
+  <p class="eyebrow">Archive</p>
+  <h1>归档</h1>
+  <p class="section-lead">按年月回看已经写下的文字。</p>
+</section>
+
+{% if tree %}
+  {% for year, months in tree.items() %}
+  <section class="archive-year">
+    <h2>{{ year }}</h2>
+    {% for month, month_posts in months.items() %}
+    <div class="archive-month">
+      <h3>{{ '%02d'|format(month) }}</h3>
+      <ul class="archive-list">
+        {% for post in month_posts %}
+        <li>
+          <time datetime="{{ post.date_iso }}">{{ post.date_iso }}</time>
+          <a href="{{ url_for('pages.post_detail', slug=post.slug) }}">{{ post.title }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+  </section>
+  {% endfor %}
+{% else %}
+  <p class="empty">暂无归档。</p>
+{% endif %}
+{% endblock %}

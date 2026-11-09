@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>C · Colophon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0c1014;
+      --panel: #12171c;
+      --ink: #e9e3d8;
+      --mute: #8e989e;
+      --line: rgba(233, 227, 216, 0.13);
+      --display: "Noto Serif SC", serif;
+      --latin: "Cormorant Garamond", Georgia, serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--ink); font-family: var(--display);
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px) 0 0 / 4.5rem 4.5rem,
+        radial-gradient(1000px 500px at 10% -10%, rgba(70, 95, 105, 0.18), transparent 55%),
+        var(--bg);
+      line-height: 1.75;
+    }
+    .wrap {
+      width: min(100% - 2rem, 64rem); margin: 0 auto; padding: 2rem 0 3rem;
+      display: grid; grid-template-columns: 8.5rem 1fr; gap: 2rem;
+    }
+    .side {
+      position: sticky; top: 2rem; align-self: start;
+      writing-mode: vertical-rl; transform: rotate(180deg);
+      height: calc(100vh - 4rem);
+      display: flex; justify-content: space-between;
+      border-right: 1px solid var(--line); padding-right: 1rem;
+      font-family: var(--latin); font-size: 0.75rem; letter-spacing: 0.28em; color: var(--mute);
+    }
+    .main { min-width: 0; }
+    .mast {
+      padding: 1.5rem 0 2.5rem; border-bottom: 1px solid var(--line);
+      display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: end;
+    }
+    .mast h1 {
+      margin: 0; font-size: clamp(2.8rem, 8vw, 4.8rem); letter-spacing: 0.14em; font-weight: 700;
+    }
+    .mast p {
+      margin: 0.85rem 0 0; font-family: var(--latin); font-style: italic;
+      font-size: 1.2rem; color: var(--mute); max-width: 16rem;
+    }
+    .nav {
+      display: flex; flex-direction: column; gap: 0.7rem; text-align: right;
+      font-family: var(--latin); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    }
+    .nav a { color: var(--mute); text-decoration: none; }
+    .note {
+      margin: 1.5rem 0 0; padding: 1rem 0 0; color: #a9b4b9;
+      font-family: var(--latin); letter-spacing: 0.18em; font-size: 0.72rem; text-transform: uppercase;
+    }
+    .posts { margin-top: 2rem; }
+    article {
+      padding: 1.5rem 1.25rem; margin: 0 0 0.75rem;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border: 1px solid var(--line);
+    }
+    article h2 { margin: 0 0 0.45rem; font-size: 1.3rem; letter-spacing: 0.07em; font-weight: 600; }
+    article h2 a { color: inherit; text-decoration: none; }
+    article p { margin: 0; color: var(--mute); }
+    .meta { margin-top: 0.8rem; font-size: 0.85rem; color: #7f8a90; font-family: var(--latin); letter-spacing: 0.08em; }
+    .colophon {
+      margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--line);
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+      font-size: 0.82rem; color: var(--mute);
+    }
+    .colophon b { display: block; margin-top: 0.25rem; color: var(--ink); font-family: var(--latin); font-weight: 500; letter-spacing: 0.06em; }
+    @media (max-width: 800px) {
+      .wrap { grid-template-columns: 1fr; }
+      .side { writing-mode: horizontal-tb; transform: none; height: auto; border-right: 0; border-bottom: 1px solid var(--line); padding: 0 0 1rem; flex-direction: row; }
+      .mast { grid-template-columns: 1fr; }
+      .nav { text-align: left; flex-direction: row; flex-wrap: wrap; }
+      .colophon { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <aside class="side">
+      <span>borelo · private notes</span>
+      <span>est. 2026</span>
+    </aside>
+    <div class="main">
+      <header class="mast">
+        <div>
+          <h1>borelo</h1>
+          <p>文字与影子之间</p>
+          <p class="note">C · Colophon</p>
+        </div>
+        <nav class="nav">
+          <a href="#">Archive</a>
+          <a href="#">Categories</a>
+          <a href="#">Tags</a>
+          <a href="#">Atom</a>
+        </nav>
+      </header>
+
+      <section class="posts">
+        <article>
+          <h2><a href="#">夜路</a></h2>
+          <p>湿润的路面映着零散的光，像记忆里未完成的底片。</p>
+          <div class="meta">2026.11.08 · 随笔</div>
+        </article>
+        <article>
+          <h2><a href="#">欢迎来到 borelo</a></h2>
+          <p>雾气尚未散尽时，把第一句话写在页缘。</p>
+          <div class="meta">2026.11.01 · 随笔</div>
+        </article>
+      </section>
+
+      <footer class="colophon">
+        <div>文章<b>2</b></div>
+        <div>分类 / 标签<b>1 / 4</b></div>
+        <div>总字数<b>322</b></div>
+        <div>最后活动<b>2026-11-08</b></div>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
