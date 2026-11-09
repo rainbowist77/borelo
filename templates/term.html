@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}{{ term_name }} · {{ site_name }}{% endblock %}
+{% block content %}
+<section class="section-head">
+  <p class="eyebrow">{{ term_type }}</p>
+  <h1>{{ term_name }}</h1>
+  <p class="section-lead">共 {{ posts|length }} 篇。</p>
+</section>
+<section class="post-list">
+  {% for post in posts %}
+  <article class="post-row">
+    <div class="post-meta-rail" aria-hidden="true"><span>{{ post.date_iso }}</span></div>
+    <div class="post-body">
+      <h2><a href="{{ url_for('pages.post_detail', slug=post.slug) }}">{{ post.title }}</a></h2>
+      <p class="summary">{{ post.summary }}</p>
+    </div>
+  </article>
+  {% endfor %}
+</section>
+{% endblock %}

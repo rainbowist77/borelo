@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ site_name }}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{{ site_description }}{% endblock %}">
+  <link rel="alternate" type="application/atom+xml" title="{{ site_name }}" href="{{ url_for('feed.atom_feed') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('borelo-theme');
+        if (saved === 'dark' || saved === 'light') {
+          document.documentElement.setAttribute('data-theme', saved);
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <div class="atmosphere" aria-hidden="true"></div>
+  <div class="page">
+    <header class="site-header">
+      <a class="brand" href="{{ url_for('pages.index') }}">{{ site_name }}</a>
+      <nav class="nav" aria-label="主导航">
+        <a href="{{ url_for('pages.archive') }}">归档</a>
+        <a href="{{ url_for('pages.categories') }}">分类</a>
+        <a href="{{ url_for('pages.tags') }}">标签</a>
+        <a href="{{ url_for('feed.atom_feed') }}">Atom</a>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="切换浅色或深色模式">浅/深</button>
+      </nav>
+    </header>
+
+    <main class="main">
+      {% block content %}{% endblock %}
+    </main>
+
+    {% include 'partials/site_stats.html' %}
+  </div>
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

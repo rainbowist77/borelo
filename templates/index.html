@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}{{ site_name }}{% endblock %}
+{% block content %}
+<section class="hero">
+  <p class="hero-brand">{{ site_name }}</p>
+  <h1 class="hero-title">在雾与夜色之间书写</h1>
+  <p class="hero-lead">{{ site_description }}</p>
+</section>
+
+<section class="post-list" aria-label="最新文章">
+  {% if posts %}
+    {% for post in posts %}
+    <article class="post-row">
+      <div class="post-meta-rail" aria-hidden="true">
+        <span>{{ post.date_iso }}</span>
+      </div>
+      <div class="post-body">
+        <h2><a href="{{ url_for('pages.post_detail', slug=post.slug) }}">{{ post.title }}</a></h2>
+        <p class="summary">{{ post.summary }}</p>
+        <p class="post-meta">
+          {% if post.categories %}
+            {% for c in post.categories %}
+              <a href="{{ url_for('pages.category_detail', name=c) }}">{{ c }}</a>{% if not loop.last %} · {% endif %}
+            {% endfor %}
+          {% endif %}
+          {% if metrics.get(post.slug) %}
+            <span class="muted"> · {{ metrics[post.slug].views }} 次阅读</span>
+          {% endif %}
+        </p>
+      </div>
+    </article>
+    {% endfor %}
+  {% else %}
+    <p class="empty">尚无文章。将 Markdown 放入 <code>content/</code> 后刷新即可。</p>
+  {% endif %}
+</section>
+{% endblock %}

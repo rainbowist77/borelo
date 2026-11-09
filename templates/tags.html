@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}标签 · {{ site_name }}{% endblock %}
+{% block content %}
+<section class="section-head">
+  <p class="eyebrow">Tags</p>
+  <h1>标签</h1>
+  <p class="section-lead">更细的线索。</p>
+</section>
+{% if tags %}
+<ul class="term-list">
+  {% for name, count in tags.items() %}
+  <li>
+    <a href="{{ url_for('pages.tag_detail', name=name) }}">#{{ name }}</a>
+    <span class="muted">{{ count }}</span>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="empty">暂无标签。</p>
+{% endif %}
+{% endblock %}

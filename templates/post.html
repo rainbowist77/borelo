@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}{{ post.title }} · {{ site_name }}{% endblock %}
+{% block description %}{{ post.summary }}{% endblock %}
+{% block content %}
+<article class="post" data-slug="{{ post.slug }}">
+  <header class="post-header">
+    <div class="post-meta-rail vertical">
+      <span>{{ post.date_iso }}</span>
+      {% if post.categories %}
+        <span>{{ post.categories | join(' / ') }}</span>
+      {% endif %}
+    </div>
+    <div>
+      <p class="eyebrow">{{ site_name }}</p>
+      <h1>{{ post.title }}</h1>
+      <p class="post-meta">
+        <time datetime="{{ post.date_iso }}">{{ post.date_iso }}</time>
+        <span class="muted"> · {{ post.word_count }} 字</span>
+      </p>
+      {% if post.tags %}
+      <p class="post-tags">
+        {% for t in post.tags %}
+          <a href="{{ url_for('pages.tag_detail', name=t) }}">#{{ t }}</a>
+        {% endfor %}
+      </p>
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="prose">
+    {{ post.body_html | safe }}
+  </div>
+
+  <div class="engagement">
+    <p>
+      <span id="view-count">{{ metric.views }}</span> 次阅读 ·
+      <span id="like-count">{{ metric.likes }}</span> 次点赞
+    </p>
+    <button type="button" class="like-button" id="like-button">点赞</button>
+  </div>
+</article>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/like.js') }}"></script>
+{% endblock %}
