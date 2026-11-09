@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A · Night Folio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07090b;
+      --ink: #ece6dc;
+      --mute: #8b949a;
+      --line: rgba(236, 230, 220, 0.14);
+      --accent: #7f9aa3;
+      --display: "Noto Serif SC", serif;
+      --latin: "Cormorant Garamond", serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: var(--display);
+      background:
+        radial-gradient(900px 420px at 50% -10%, rgba(90, 120, 130, 0.16), transparent 60%),
+        linear-gradient(180deg, #10151a 0%, var(--bg) 42%, #05070a 100%);
+      line-height: 1.7;
+    }
+    .grain {
+      position: fixed; inset: 0; pointer-events: none; opacity: 0.11; mix-blend-mode: soft-light; z-index: 5;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.65'/%3E%3C/svg%3E");
+    }
+    .page { position: relative; z-index: 1; width: min(100% - 3rem, 58rem); margin: 0 auto; padding: 1.75rem 0 4rem; }
+    header {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding-bottom: 1.25rem; border-bottom: 1px solid var(--line);
+    }
+    .brand {
+      font-family: var(--latin); letter-spacing: 0.34em; text-transform: lowercase;
+      text-decoration: none; color: inherit; font-size: 1rem;
+    }
+    nav { display: flex; gap: 1.25rem; font-family: var(--latin); font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase; }
+    nav a { color: var(--mute); text-decoration: none; }
+    .hero { padding: 4.5rem 0 3.5rem; border-bottom: 1px solid var(--line); }
+    .hero-brand {
+      margin: 0; font-size: clamp(3.5rem, 12vw, 7rem); font-weight: 700;
+      letter-spacing: 0.16em; line-height: 0.95;
+    }
+    .hero p {
+      margin: 1.4rem 0 0; max-width: 18rem; color: var(--mute);
+      font-family: var(--latin); font-style: italic; font-size: 1.25rem; letter-spacing: 0.04em;
+    }
+    .list { margin-top: 2.5rem; }
+    article {
+      display: grid; grid-template-columns: 2rem 1fr; gap: 1.5rem;
+      padding: 1.6rem 0; border-bottom: 1px solid var(--line);
+    }
+    .rail {
+      writing-mode: vertical-rl; transform: rotate(180deg);
+      font-size: 0.68rem; letter-spacing: 0.2em; color: var(--mute); justify-self: center;
+    }
+    h2 { margin: 0 0 0.4rem; font-size: 1.4rem; font-weight: 600; letter-spacing: 0.08em; }
+    h2 a { color: inherit; text-decoration: none; }
+    .sum { margin: 0; color: var(--mute); max-width: 34rem; }
+    footer {
+      margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--line);
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+      font-size: 0.85rem; color: var(--mute);
+    }
+    footer b { display: block; color: var(--ink); font-weight: 500; margin-top: 0.2rem; font-family: var(--latin); letter-spacing: 0.08em; }
+    .tag { font-family: var(--latin); font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--accent); margin: 0 0 1rem; }
+  </style>
+</head>
+<body>
+  <div class="grain"></div>
+  <div class="page">
+    <header>
+      <a class="brand" href="#">borelo</a>
+      <nav>
+        <a href="#">Archive</a>
+        <a href="#">Categories</a>
+        <a href="#">Tags</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <p class="tag">A · Night Folio</p>
+      <h1 class="hero-brand">borelo</h1>
+      <p>文字与影子之间</p>
+    </section>
+
+    <section class="list">
+      <article>
+        <div class="rail">2026-11-08</div>
+        <div>
+          <h2><a href="#">夜路</a></h2>
+          <p class="sum">湿润的路面映着零散的光，像记忆里未完成的底片。</p>
+        </div>
+      </article>
+      <article>
+        <div class="rail">2026-11-01</div>
+        <div>
+          <h2><a href="#">欢迎来到 borelo</a></h2>
+          <p class="sum">雾气尚未散尽时，把第一句话写在页缘。</p>
+        </div>
+      </article>
+    </section>
+
+    <footer>
+      <div>文章<b>2</b></div>
+      <div>总字数<b>322</b></div>
+      <div>运行<b>0 天</b></div>
+    </footer>
+  </div>
+</body>
+</html>
