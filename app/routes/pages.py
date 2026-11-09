@@ -16,6 +16,10 @@ def inject_globals():
         "site_name": config.SITE_NAME,
         "site_author": config.SITE_AUTHOR,
         "site_description": config.SITE_DESCRIPTION,
+        "site_tagline": config.SITE_TAGLINE,
+        "site_edition": config.SITE_EDITION,
+        "site_launched_year": config.SITE_LAUNCHED.strftime("%Y"),
+        "site_timezone": config.SITE_TIMEZONE,
         "site_stats": stats.site_stats(),
     }
 
@@ -57,6 +61,7 @@ def category_detail(name: str):
     return render_template(
         "term.html",
         term_type="分类",
+        term_kicker="Category",
         term_name=name,
         posts=listed,
         metrics=metric_map,
@@ -77,6 +82,7 @@ def tag_detail(name: str):
     return render_template(
         "term.html",
         term_type="标签",
+        term_kicker="Tag",
         term_name=name,
         posts=listed,
         metrics=metric_map,

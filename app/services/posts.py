@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from datetime import date, datetime
 from pathlib import Path
@@ -13,6 +14,10 @@ import markdown as md
 import config
 
 _cache: dict[str, Any] = {"mtime": None, "posts": []}
+
+# CJK ideographs, kana and hangul all count as one "character" each.
+_CJK_RE = re.compile(r"[぀-ヿ㐀-䶿一-鿿가-힯]")
+_LATIN_RE = re.compile(r"[A-Za-z0-9]+(?:['’\-][A-Za-z0-9]+)*")
 
 
 @dataclass
@@ -39,7 +44,10 @@ def _parse_date(value: Any) -> date:
     if isinstance(value, date):
         return value
     if isinstance(value, str) and value.strip():
-        return date.fromisoformat(value.strip()[:10])
+        try:
+            return date.fromisoformat(value.strip()[:10])
+        except ValueError:
+            return date.today()
     return date.today()
 
 
@@ -53,18 +61,18 @@ def _as_list(value: Any) -> list[str]:
     return [str(value).strip()]
 
 
-def _word_count(text: str) -> int:
-    """Count CJK characters plus whitespace-separated Latin tokens."""
+def word_count(text: str) -> int:
+    """Count CJK characters plus Latin/numeric word tokens.
+
+    Chinese is counted per character; Latin runs are counted per word, so
+    "hello world" is 2 rather than 10. This keeps the footer number honest
+    for mixed-language posts.
+    """
     if not text:
         return 0
-    cjk = sum(1 for ch in text if "\u4e00" <= ch <= "\u9fff")
-    latin = [tok for tok in text.split() if any("a" <= c.lower() <= "z" for c in tok if c.isalpha())]
-    # Prefer CJK-heavy count; fall back to simple length for mixed/plain text
-    stripped = "".join(text.split())
-    if cjk:
-        non_space = len(stripped)
-        return non_space
-    return len(text.split()) or len(stripped)
+    cjk = len(_CJK_RE.findall(text))
+    latin = len(_LATIN_RE.findall(_CJK_RE.sub(" ", text)))
+    return cjk + latin
 
 
 def _load_post(path: Path) -> Post | None:
@@ -86,7 +94,8 @@ def _load_post(path: Path) -> Post | None:
     )
     if not summary:
         plain = " ".join(body.split())
-        summary = plain[:120] + ("…" if len(plain) > 120 else "")
+        limit = config.SUMMARY_LENGTH
+        summary = plain[:limit] + ("…" if len(plain) > limit else "")
 
     return Post(
         slug=slug,
@@ -97,7 +106,7 @@ def _load_post(path: Path) -> Post | None:
         summary=summary,
         body_html=body_html,
         body_text=body,
-        word_count=_word_count(body),
+        word_count=word_count(body),
         path=path,
     )
 
@@ -114,16 +123,16 @@ def load_posts(*, force: bool = False) -> list[Post]:
     if not force and _cache["posts"] and _cache["mtime"] == mtime:
         return list(_cache["posts"])
 
-    posts: list[Post] = []
+    collected: list[Post] = []
     if config.CONTENT_DIR.exists():
         for path in sorted(config.CONTENT_DIR.glob("*.md")):
             item = _load_post(path)
             if item:
-                posts.append(item)
-    posts.sort(key=lambda p: (p.date, p.slug), reverse=True)
+                collected.append(item)
+    collected.sort(key=lambda p: (p.date, p.slug), reverse=True)
     _cache["mtime"] = mtime
-    _cache["posts"] = posts
-    return list(posts)
+    _cache["posts"] = collected
+    return list(collected)
 
 
 def get_post(slug: str) -> Post | None:

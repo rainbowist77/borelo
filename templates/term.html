@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}{{ term_name }} · {{ site_name }}{% endblock %}
 {% block content %}
-<section class="section-head">
-  <p class="eyebrow">{{ term_type }}</p>
+<section class="page-head">
+  <p class="eyebrow">{{ term_kicker }} · {{ term_type }}</p>
   <h1>{{ term_name }}</h1>
-  <p class="section-lead">共 {{ posts|length }} 篇。</p>
+  <p class="page-lead">共 {{ posts|length }} 篇。</p>
 </section>
+
 <section class="post-list">
   {% for post in posts %}
   <article class="post-row">

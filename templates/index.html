@@ -3,64 +3,88 @@
 {% block body_class %}is-home{% endblock %}
 {% block shell %}
 <section class="cover" aria-label="{{ site_name }}">
-  <div class="cover-media" aria-hidden="true">
-    <div class="cover-half cover-half-top">
-      <div class="mist"></div>
-      <div class="silhouette"></div>
+
+  <div class="scene" aria-hidden="true">
+    <div class="scene-top"></div>
+    <div class="scene-bottom"></div>
+    <div class="reflect"><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="haze"></div>
+    <div class="seam"></div>
+
+    <div class="figure figure-left">
+      <div class="head"></div>
+      <div class="body"></div>
     </div>
-    <div class="cover-half cover-half-bottom">
-      <div class="street-glow"></div>
-      <div class="walkers"></div>
-      <div class="reflection"></div>
-    </div>
-    <div class="cover-grain"></div>
+    <div class="figure figure-mid"></div>
+    <div class="figure figure-right"></div>
   </div>
 
+  <div class="cover-grain" aria-hidden="true"></div>
+
   <header class="cover-top">
-    <a class="cover-home" href="{{ url_for('pages.index') }}">{{ site_name }}</a>
+    <a class="cover-mark" href="{{ url_for('pages.index') }}">{{ site_name }}</a>
     {% include 'partials/nav.html' %}
   </header>
 
-  <div class="cover-stage">
-    <div class="title-plate">
-      <div class="plate-rail" aria-hidden="true">
-        <span>作者</span>
-        <span>{{ site_author }}</span>
+  <div class="stage">
+    <div class="plate">
+      <div class="plate-cols" aria-hidden="true">
+        <span>{{ site_name }} 著</span>
+        <span>{{ site_description }}</span>
       </div>
-      <div class="plate-core">
-        <h1 class="plate-title">{{ site_name }}</h1>
-        <p class="plate-latin">{{ site_author | upper }}</p>
-      </div>
+
+      <h1 class="plate-title">{{ site_name }}</h1>
+      <p class="plate-sub">{{ site_tagline }}</p>
+      <span class="plate-rule" aria-hidden="true"></span>
+      <p class="plate-latin">{{ site_edition }}</p>
     </div>
-    <p class="cover-sub">{{ site_description }}</p>
-    <a class="cover-cta" href="#entries">阅读文章</a>
+
+    <p class="cover-word">{{ site_name | upper }}</p>
+    <p class="cover-tag">{{ site_description }}</p>
   </div>
+
+  <footer class="cover-foot">
+    <a class="scroll" href="#entries">
+      <i aria-hidden="true"></i><span>Scroll to read</span>
+    </a>
+    <div class="cols">
+      <span>Est. {{ site_launched_year }}</span>
+      <span>Vol. I</span>
+      <span>{{ site_timezone }}</span>
+    </div>
+  </footer>
 </section>
 
-<div class="after-cover">
-  <main class="main main-home" id="entries">
-    <section class="entries" aria-label="最新文章">
-      <header class="entries-head">
-        <p class="entries-kicker">Recent</p>
-        <h2>近作</h2>
+<div class="shell">
+  <main class="main" id="entries">
+    <section aria-label="最新文章">
+      <header class="section-head">
+        <span class="no">I</span>
+        <h2>Recent Entries</h2>
+        <span class="rule" aria-hidden="true"></span>
+        <em>近作</em>
       </header>
 
       {% if posts %}
         {% for post in posts %}
         <article class="entry">
-          <div class="entry-rail" aria-hidden="true">{{ post.date_iso }}</div>
-          <div class="entry-main">
+          <div class="entry-rail" aria-hidden="true">
+            <span class="num">{{ loop.revindex | roman }}</span>
+            <time datetime="{{ post.date_iso }}">{{ post.date_iso.replace('-', ' · ') }}</time>
+          </div>
+          <div>
             <h3><a href="{{ url_for('pages.post_detail', slug=post.slug) }}">{{ post.title }}</a></h3>
-            <p class="entry-summary">{{ post.summary }}</p>
-            <p class="entry-meta">
-              {% if post.categories %}
-                {% for c in post.categories %}
-                  <a href="{{ url_for('pages.category_detail', name=c) }}">{{ c }}</a>{% if not loop.last %} / {% endif %}
-                {% endfor %}
+            <p class="summary">{{ post.summary }}</p>
+            <p class="meta">
+              {% for c in post.categories %}
+                <a href="{{ url_for('pages.category_detail', name=c) }}">{{ c }}</a>{% if not loop.last %}<span class="sep">·</span>{% endif %}
+              {% endfor %}
+              {% if post.tags %}
+                {% if post.categories %}<span class="sep">·</span>{% endif %}
+                {{ post.tags | join(' · ') }}
               {% endif %}
-              {% if metrics.get(post.slug) %}
-                <span>· {{ metrics[post.slug].views }} 次阅读</span>
-              {% endif %}
+              <span class="sep">·</span>
+              <span class="views">{{ metrics[post.slug].views }} 次阅读</span>
             </p>
           </div>
         </article>

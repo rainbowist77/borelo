@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}未找到 · {{ site_name }}{% endblock %}
 {% block content %}
-<section class="section-head">
+<section class="page-head">
   <p class="eyebrow">404</p>
   <h1>没有找到这一页</h1>
-  <p class="section-lead"><a href="{{ url_for('pages.index') }}">返回首页</a></p>
+  <p class="page-lead"><a href="{{ url_for('pages.index') }}">返回首页</a></p>
 </section>
 {% endblock %}

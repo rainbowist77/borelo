@@ -4,27 +4,30 @@
 {% block content %}
 <article class="post" data-slug="{{ post.slug }}">
   <header class="post-mast">
-    <div class="post-rail" aria-hidden="true">
-      <span>{{ post.date_iso }}</span>
-      {% if post.categories %}
-      <span>{{ post.categories | join(' · ') }}</span>
-      {% endif %}
-    </div>
-    <div class="post-mast-main">
-      <p class="mast-brand">{{ site_name }}</p>
-      <h1>{{ post.title }}</h1>
-      <p class="post-meta">
-        <time datetime="{{ post.date_iso }}">{{ post.date_iso }}</time>
-        <span>· {{ post.word_count }} 字</span>
-      </p>
-      {% if post.tags %}
-      <p class="post-tags">
-        {% for t in post.tags %}
-          <a href="{{ url_for('pages.tag_detail', name=t) }}">{{ t }}</a>{% if not loop.last %} · {% endif %}
-        {% endfor %}
-      </p>
-      {% endif %}
-    </div>
+    <p class="post-kicker">
+      <span class="kind">Essay</span>
+      <time datetime="{{ post.date_iso }}">{{ post.date_iso.replace('-', ' · ') }}</time>
+      <span>{{ post.word_count }} 字</span>
+    </p>
+
+    <h1>{{ post.title }}</h1>
+
+    {% if post.summary %}
+    <p class="post-dek">{{ post.summary }}</p>
+    {% endif %}
+
+    {% if post.categories or post.tags %}
+    <p class="post-meta">
+      {% for c in post.categories %}
+        <a href="{{ url_for('pages.category_detail', name=c) }}">{{ c }}</a>
+        {% if not loop.last or post.tags %}<span class="sep">·</span>{% endif %}
+      {% endfor %}
+      {% for t in post.tags %}
+        <a href="{{ url_for('pages.tag_detail', name=t) }}">#{{ t }}</a>
+        {% if not loop.last %}<span class="sep">·</span>{% endif %}
+      {% endfor %}
+    </p>
+    {% endif %}
   </header>
 
   <div class="prose">
@@ -33,13 +36,19 @@
 
   <div class="engagement">
     <p>
-      <span id="view-count">{{ metric.views }}</span> 次阅读 ·
-      <span id="like-count">{{ metric.likes }}</span> 次点赞
+      <span class="count" id="view-count">{{ metric.views }}</span> 次阅读
+      <span class="sep">·</span>
+      <span class="count" id="like-count">{{ metric.likes }}</span> 次点赞
     </p>
     <button type="button" class="like-button" id="like-button">点赞</button>
   </div>
+
+  <nav class="post-foot" aria-label="文章导航">
+    <a href="{{ url_for('pages.index') }}">← 返回首页</a>
+    <a href="{{ url_for('pages.archive') }}">归档 →</a>
+  </nav>
 </article>
 {% endblock %}
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/like.js') }}"></script>
+<script src="{{ url_for('static', filename='js/post.js') }}" defer></script>
 {% endblock %}
