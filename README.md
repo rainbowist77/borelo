@@ -226,6 +226,20 @@ content/pages/about.md
 - 焦点态统一为一像素黄铜色描边
 - 封面顶部的深色导航压在一层浅色雾罩上，保证在右侧深色人影上仍然可读
 
+## 设计留档
+
+`docs/designs/` 保存了 2026 年 11 月那轮视觉探索的五个方案，每份都是独立的单文件 HTML，双击即可打开：
+
+| 文件 | 方案 |
+|---|---|
+| `05-veil.html` | Veil · 帷幕 —— **最终采用** |
+| `01-codex.html` | Codex · 手抄本 |
+| `02-press.html` | Press · 文学刊物 |
+| `03-illuminated.html` | Illuminated · 泥金手抄 |
+| `04-quarto.html` | Quarto · 四开本 |
+
+从 `docs/designs/index.html` 进入可以看到带缩略图的索引。这些文件只是留档，不参与构建，样式也和应用实际使用的 `static/css/main.css` 无关。
+
 ## 已知取舍
 
 - **`/feed.atom` 的 Jinja 自动转义是关闭的**（Flask 只对 `.html/.htm/.xml/.xhtml/.svg` 自动开启）。模板里每个变量都显式写了 `| e`，改动该文件时务必保持。漏一个，标题里的 `&` 或 `<` 就会产出非法 XML。
@@ -257,11 +271,12 @@ content/
   *.md               文章
   pages/*.md         独立页
 data/                SQLite（gitignore）
-docs/                预览图
+docs/
+  preview-*.jpg      README 预览图
+  designs/           五版设计方案留档
 templates/           Jinja 模板
 static/
   css/ js/           样式与脚本
   uploads/           文章引用的图片与文件
 nginx/               反代与静态资源配置
-mocks/               早期设计稿，仅作留档
 ```

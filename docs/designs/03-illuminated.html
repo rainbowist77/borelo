@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>borelo · 方案三 Illuminated</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0d14;
+  --bg-deep:#06070c;
+  --ink:#e7dfd0;
+  --ink-soft:#c3bbae;
+  --mute:#8d8b8f;
+  --line:rgba(196,168,110,.30);
+  --line-soft:rgba(196,168,110,.14);
+  --gold:#c4a86e;
+  --gold-dim:#8f7a4d;
+  --oxblood:#7d3230;
+  --lapis:#2b3a5c;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;color:var(--ink);background:var(--bg);
+  font-family:"Noto Serif SC","Cormorant Garamond",serif;font-weight:400;
+  line-height:1.9;letter-spacing:.02em;
+  background-image:
+    radial-gradient(900px 520px at 50% -8%, rgba(43,58,92,.55), transparent 65%),
+    radial-gradient(700px 420px at 12% 34%, rgba(125,50,48,.16), transparent 62%),
+    radial-gradient(760px 460px at 92% 76%, rgba(196,168,110,.10), transparent 60%),
+    linear-gradient(180deg, #0b0f18 0%, var(--bg) 40%, var(--bg-deep) 100%);
+  background-attachment:fixed;
+}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:60;opacity:.16;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");}
+a{color:inherit}
+a:focus-visible{outline:1px solid var(--gold);outline-offset:5px}
+
+/* —— page frame —— */
+.page{width:min(100% - 2.5rem, 62rem);margin:0 auto;padding:1.6rem 0 4.5rem}
+.frame{
+  border:1px solid var(--line);
+  box-shadow:0 0 0 1px rgba(196,168,110,.06), 0 0 90px rgba(0,0,0,.5) inset;
+  position:relative;
+  background:linear-gradient(180deg, rgba(255,255,255,.012), transparent 30%);
+}
+.frame::before,.frame::after{
+  content:"";position:absolute;width:14px;height:14px;border:1px solid var(--gold-dim);pointer-events:none;
+}
+.frame::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.frame::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.inner{padding:0 clamp(1.4rem,5vw,3.6rem)}
+
+/* —— topbar —— */
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:1.2rem;
+  padding:1.15rem 0;border-bottom:1px solid var(--line-soft);
+  font-family:"Cormorant Garamond",Georgia,serif;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--mute)}
+.topbar .sigil{font-family:"Cormorant Garamond",Georgia,serif;font-size:1rem;letter-spacing:.42em;
+  color:var(--gold);text-decoration:none;padding-left:.42em}
+.topbar nav{display:flex;flex-wrap:wrap;gap:.35rem 1.35rem}
+.topbar nav a{text-decoration:none;color:var(--mute);transition:color .3s}
+.topbar nav a:hover{color:var(--gold)}
+
+/* —— title page —— */
+.titlepage{text-align:center;padding:4.4rem 0 3.6rem}
+.eyebrow{margin:0;font-family:"Cormorant Garamond",Georgia,serif;font-size:.72rem;
+  letter-spacing:.42em;text-transform:uppercase;color:var(--gold-dim)}
+.rule-orn{display:flex;align-items:center;justify-content:center;gap:.9rem;margin:1.5rem auto 1.2rem;max-width:16rem}
+.rule-orn i{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+.rule-orn span{width:6px;height:6px;border:1px solid var(--gold-dim);transform:rotate(45deg);display:block}
+.display{
+  margin:.4rem 0 0;font-family:"Cormorant Garamond",Georgia,serif;font-weight:300;
+  font-size:clamp(4.2rem, 14vw, 9rem);line-height:.9;letter-spacing:.14em;text-transform:lowercase;
+  color:#f0e8d8;text-shadow:0 0 60px rgba(196,168,110,.28);
+}
+.subtitle{margin:1.2rem 0 0;font-size:.98rem;letter-spacing:.5em;text-indent:.5em;color:var(--ink-soft);font-weight:300}
+.imprint{margin:2.2rem 0 0;font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;
+  font-size:.94rem;letter-spacing:.14em;color:var(--mute)}
+
+/* —— section header —— */
+.sec{margin-top:3.4rem}
+.sec-head{display:flex;flex-direction:column;align-items:center;gap:.55rem;margin-bottom:1.4rem}
+.sec-head h2{margin:0;font-weight:400;font-size:.84rem;letter-spacing:.42em;text-transform:uppercase;
+  font-family:"Cormorant Garamond",Georgia,serif;color:var(--gold)}
+.sec-head em{font-style:normal;font-size:.76rem;letter-spacing:.3em;color:var(--mute)}
+
+/* —— entries —— */
+.entry{
+  display:grid;grid-template-columns:4.6rem minmax(0,1fr);gap:1.6rem;
+  padding:2.1rem 0;border-top:1px solid var(--line-soft);
+}
+.entry:last-of-type{border-bottom:1px solid var(--line-soft)}
+.numeral{font-family:"Cormorant Garamond",Georgia,serif;font-size:1.9rem;font-weight:300;
+  line-height:1;color:var(--gold-dim);text-align:center;padding-top:.25rem;
+  border-right:1px solid var(--line-soft);display:flex;align-items:flex-start;justify-content:center}
+.entry h3{margin:0 0 .55rem;font-size:clamp(1.32rem,2.6vw,1.6rem);font-weight:400;letter-spacing:.08em;line-height:1.6}
+.entry h3 a{text-decoration:none}
+.entry h3 a:hover{color:var(--gold)}
+.entry .summary{margin:0 0 .85rem;font-weight:300;font-size:.94rem;line-height:2.05;color:var(--ink-soft)}
+.entry .meta{margin:0;font-family:"Cormorant Garamond",Georgia,serif;font-size:.74rem;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
+.entry .meta a{text-decoration:none;color:var(--mute)}
+.entry .meta a:hover{color:var(--gold)}
+.entry .meta .sep{margin:0 .5rem;color:var(--gold-dim)}
+
+/* —— specimen —— */
+.specimen{margin-top:4rem;padding:2.8rem clamp(.4rem,2vw,1.4rem) 1rem;
+  border:1px solid var(--line-soft);position:relative;background:rgba(255,255,255,.008)}
+.specimen .label{position:absolute;top:-.62rem;left:1.4rem;padding:0 .7rem;background:var(--bg);
+  font-family:"Cormorant Garamond",Georgia,serif;font-size:.68rem;letter-spacing:.34em;
+  text-transform:uppercase;color:var(--gold-dim)}
+.specimen-inner{max-width:34rem;margin:0 auto;text-align:left;padding:1.4rem 0 0}
+.specimen h2{margin:0 0 .35rem;text-align:center;font-size:clamp(1.9rem,4vw,2.5rem);font-weight:400;letter-spacing:.12em}
+.specimen .byline{margin:0 0 2rem;text-align:center;font-style:italic;
+  font-family:"Cormorant Garamond",Georgia,serif;color:var(--gold-dim);font-size:.92rem;letter-spacing:.16em}
+.specimen p{margin:0 0 1.5rem;font-weight:300;font-size:1rem;line-height:2.1;color:var(--ink-soft)}
+.specimen p.lead{color:var(--ink)}
+.specimen p.lead::first-letter{
+  float:left;font-family:"Cormorant Garamond",Georgia,serif;font-size:3.6em;line-height:.78;
+  padding:.06em .16em 0 0;color:var(--gold);
+  text-shadow:0 0 22px rgba(196,168,110,.35);
+}
+.specimen .orn{display:flex;align-items:center;justify-content:center;gap:.8rem;margin:2.1rem 0}
+.specimen .orn i{width:4.5rem;height:1px;background:linear-gradient(90deg,transparent,var(--line))}
+.specimen .orn i:last-child{background:linear-gradient(90deg,var(--line),transparent)}
+.specimen .orn span{font-family:"Cormorant Garamond",Georgia,serif;color:var(--gold-dim);font-size:1rem;letter-spacing:.3em}
+.specimen blockquote{margin:2rem 0;text-align:center;border:0;padding:0;
+  font-size:1.1rem;line-height:2;color:var(--ink);letter-spacing:.12em}
+
+/* —— colophon —— */
+.colophon{margin-top:4.2rem;padding-top:1.6rem;border-top:1px solid var(--line);text-align:center}
+.stats{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem 2rem;margin:0 0 1.3rem;padding:0;list-style:none;
+  font-family:"Cormorant Garamond",Georgia,serif;font-size:.72rem;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--mute)}
+.stats b{font-weight:400;color:var(--gold);margin-left:.5rem;letter-spacing:.1em}
+.fin{margin:0;font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;
+  font-size:.86rem;letter-spacing:.2em;color:var(--mute)}
+.fin a{color:var(--mute);text-decoration:none;border-bottom:1px solid var(--line-soft)}
+.fin a:hover{color:var(--gold)}
+
+@media (max-width:720px){
+  .page{width:min(100% - 1.4rem,62rem);padding-top:.9rem}
+  .inner{padding:0 1.15rem}
+  .titlepage{padding:2.8rem 0 2.4rem}
+  .display{letter-spacing:.1em}
+  .entry{grid-template-columns:2.6rem minmax(0,1fr);gap:1rem}
+  .numeral{font-size:1.35rem}
+  .topbar{flex-direction:column;align-items:center;gap:.7rem;text-align:center}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="page">
+  <div class="frame">
+    <div class="inner">
+
+      <div class="topbar">
+        <a class="sigil" href="#">borelo</a>
+        <nav aria-label="主导航">
+          <a href="#entries">Recent</a>
+          <a href="#">Archive</a>
+          <a href="#">Categories</a>
+          <a href="#">Tags</a>
+          <a href="#">Atom</a>
+        </nav>
+      </div>
+
+      <header class="titlepage">
+        <p class="eyebrow">A private illuminated journal</p>
+        <div class="rule-orn" aria-hidden="true"><i></i><span></span><i></i></div>
+        <h1 class="display">borelo</h1>
+        <p class="subtitle">文字与影子之间</p>
+        <p class="imprint">Scribbled in the margins of the night · MMXXVI</p>
+      </header>
+
+      <section class="sec" id="entries">
+        <div class="sec-head">
+          <h2>Recent Entries</h2>
+          <em>近作</em>
+        </div>
+
+        <article class="entry">
+          <div class="numeral" aria-hidden="true">II</div>
+          <div>
+            <h3><a href="#">夜路</a></h3>
+            <p class="summary">雨后街道把灯光拉得很长。人影经过，又很快被暗处收回。湿润的路面映着零散的光，像记忆里未完成的底片。</p>
+            <p class="meta"><a href="#">随笔</a><span class="sep">·</span>2026 · 11 · 08<span class="sep">·</span>城市 · 影像</p>
+          </div>
+        </article>
+
+        <article class="entry">
+          <div class="numeral" aria-hidden="true">I</div>
+          <div>
+            <h3><a href="#">欢迎来到 borelo</a></h3>
+            <p class="summary">这是站点的第一篇示例文字，说明如何用 Markdown 发布。</p>
+            <p class="meta"><a href="#">随笔</a><span class="sep">·</span>2026 · 11 · 01<span class="sep">·</span>开篇 · 说明</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="specimen">
+        <span class="label">文章页 · Specimen</span>
+        <div class="specimen-inner">
+          <h2>夜路</h2>
+          <p class="byline">On night walks, and the words left behind</p>
+          <p class="lead">雨后的街道把灯光拉得很长。人影经过，又很快被暗处收回。湿润的路面映着零散的光，像记忆里未完成的底片。</p>
+          <p>不必急着写下结论。有些句子适合留在夜里，等明天再读。观察比命名更先一步，留白也是结构的一部分。</p>
+          <div class="orn" aria-hidden="true"><i></i><span>❧</span><i></i></div>
+          <blockquote>雾气与夜色之间，字句慢慢落下。</blockquote>
+          <p>于是这一页不必写满。它在暗处留出的空白，比写下的字更像一个完整的夜晚。</p>
+        </div>
+      </section>
+
+      <footer class="colophon">
+        <ul class="stats">
+          <li>文章<b>2</b></li>
+          <li>分类<b>1</b></li>
+          <li>标签<b>4</b></li>
+          <li>总字数<b>182</b></li>
+          <li>运行<b>0 天</b></li>
+        </ul>
+        <p class="fin"><a href="index.html">Explícit · 全部方案</a></p>
+      </footer>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

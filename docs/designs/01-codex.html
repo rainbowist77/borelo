@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>borelo · 方案一 Codex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0a09;
+  --ink:#e9e1d2;
+  --ink-soft:#cfc6b6;
+  --mute:#a19785;
+  --line:rgba(233,225,210,.16);
+  --line-soft:rgba(233,225,210,.08);
+  --gold:#b39763;
+  --gold-soft:rgba(179,151,99,.55);
+  --rubric:#b4593f;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"Noto Serif SC","EB Garamond",Georgia,serif;
+  font-weight:400;
+  line-height:1.85;
+  letter-spacing:.012em;
+  background-image:
+    radial-gradient(1100px 620px at 48% -18%, rgba(168,132,82,.13), transparent 62%),
+    radial-gradient(900px 520px at 100% 104%, rgba(120,52,38,.12), transparent 60%);
+  background-attachment:fixed;
+}
+.grain{
+  position:fixed;inset:0;pointer-events:none;z-index:60;opacity:.15;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+}
+a{color:inherit}
+a:focus-visible{outline:1px solid var(--gold);outline-offset:4px}
+.sheet{width:min(100% - 2.75rem, 63rem);margin:0 auto;padding-bottom:4.5rem}
+
+/* —— masthead —— */
+.mast{
+  display:flex;align-items:center;justify-content:space-between;gap:1.5rem;
+  padding:1.55rem 0;border-bottom:1px solid var(--line);
+}
+.brand{
+  font-family:"EB Garamond",Georgia,serif;font-size:1.02rem;letter-spacing:.44em;
+  text-transform:lowercase;text-decoration:none;padding-left:.44em;color:var(--ink);
+}
+.nav{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;font-family:"EB Garamond",Georgia,serif;
+  font-size:.715rem;letter-spacing:.24em;text-transform:uppercase}
+.nav a{color:var(--mute);text-decoration:none;transition:color .25s ease}
+.nav a:hover{color:var(--gold)}
+
+/* —— hero —— */
+.hero{
+  display:grid;grid-template-columns:9.5rem minmax(0,1fr);gap:2.5rem;
+  padding:4.75rem 0 4rem;border-bottom:1px solid var(--line);
+}
+.hero-rail{display:flex;flex-direction:column;justify-content:flex-end;gap:1rem;
+  font-family:"EB Garamond",Georgia,serif;font-size:.7rem;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--mute);padding-bottom:.5rem}
+.hero-rail .vline{width:1px;height:4.5rem;background:linear-gradient(180deg,transparent,var(--gold-soft))}
+.kicker{margin:0 0 1.15rem;font-family:"EB Garamond",Georgia,serif;font-style:italic;
+  font-size:1.06rem;letter-spacing:.05em;color:var(--gold)}
+.hero-title{
+  margin:0;font-family:"EB Garamond",Georgia,serif;font-weight:400;
+  font-size:clamp(4rem, 13vw, 8.4rem);line-height:.84;letter-spacing:.055em;
+  text-transform:lowercase;
+}
+.epigraph{
+  margin:1.75rem 0 0;font-size:clamp(1rem,1.6vw,1.2rem);
+  letter-spacing:.32em;text-indent:.32em;color:var(--ink-soft);
+}
+.epigraph::before{
+  content:"";display:block;width:2.6rem;height:1px;background:var(--gold-soft);margin-bottom:1.3rem;
+}
+
+/* —— section —— */
+.section{padding-top:3.4rem}
+.section-head{display:flex;align-items:baseline;gap:1.1rem;margin-bottom:.5rem}
+.section-head .num{font-family:"EB Garamond",Georgia,serif;font-size:.78rem;letter-spacing:.2em;color:var(--rubric)}
+.section-head h2{margin:0;font-size:.86rem;font-weight:400;letter-spacing:.34em;text-transform:uppercase;
+  font-family:"EB Garamond",Georgia,serif;color:var(--ink-soft)}
+.section-head .rule{flex:1;height:1px;background:var(--line);align-self:center;margin-top:.35rem}
+.section-head .year{font-family:"EB Garamond",Georgia,serif;font-size:.74rem;letter-spacing:.22em;color:var(--mute)}
+
+/* —— entries —— */
+.entry{
+  display:grid;grid-template-columns:9.5rem minmax(0,1fr);gap:2.5rem;
+  padding:2.4rem 0 2.5rem;border-bottom:1px solid var(--line-soft);
+}
+.entry-rail{display:flex;flex-direction:column;gap:.55rem;padding-top:.45rem;
+  font-family:"EB Garamond",Georgia,serif;color:var(--mute)}
+.entry-rail .roman{font-size:1.05rem;letter-spacing:.16em;color:var(--gold)}
+.entry-rail time{font-size:.74rem;letter-spacing:.2em;font-variant-numeric:tabular-nums}
+.entry h3{margin:0 0 .7rem;font-size:clamp(1.4rem,2.6vw,1.72rem);font-weight:500;line-height:1.5;letter-spacing:.05em}
+.entry h3 a{text-decoration:none;background-image:linear-gradient(var(--gold-soft),var(--gold-soft));
+  background-repeat:no-repeat;background-size:0 1px;background-position:0 100%;transition:background-size .5s var(--ease,cubic-bezier(.22,1,.36,1))}
+.entry h3 a:hover{background-size:100% 1px}
+.entry .summary{margin:0 0 1rem;max-width:34rem;color:var(--ink-soft);font-size:.955rem;line-height:1.95;font-weight:300}
+.entry .meta{margin:0;font-family:"EB Garamond",Georgia,serif;font-size:.76rem;letter-spacing:.13em;color:var(--mute)}
+.entry .meta a{color:var(--mute);text-decoration:none;border-bottom:1px solid var(--line)}
+.entry .meta a:hover{color:var(--gold);border-color:var(--gold-soft)}
+.dot{opacity:.5;margin:0 .45rem}
+
+/* —— specimen —— */
+.specimen{margin-top:4.5rem;padding:3rem 0 0;border-top:1px solid var(--line)}
+.specimen-note{display:flex;align-items:center;gap:1rem;margin-bottom:2.6rem;
+  font-family:"EB Garamond",Georgia,serif;font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--mute)}
+.specimen-note::after{content:"";flex:1;height:1px;background:var(--line-soft)}
+.specimen-inner{max-width:36rem}
+.specimen h2{margin:0 0 .6rem;font-size:clamp(2rem,4vw,2.6rem);font-weight:500;letter-spacing:.07em}
+.specimen .sub{margin:0 0 2.2rem;font-family:"EB Garamond",Georgia,serif;font-style:italic;color:var(--gold);font-size:.98rem}
+.specimen p{margin:0 0 1.5rem;font-size:1.015rem;line-height:2.1;color:var(--ink-soft);font-weight:300}
+.specimen p.lead{color:var(--ink)}
+.specimen p.lead::first-letter{
+  float:left;font-family:"Noto Serif SC",serif;font-size:3.15em;line-height:.86;
+  padding:.11em .16em 0 0;color:var(--gold);
+}
+.specimen blockquote{
+  margin:2.4rem 0;padding:0 0 0 1.5rem;border-left:1px solid var(--gold-soft);
+  font-size:1.12rem;line-height:2;color:var(--ink);font-weight:300;letter-spacing:.04em;
+}
+.specimen blockquote p{margin:0;color:inherit;font-size:inherit;line-height:inherit;font-weight:inherit}
+
+/* —— footer —— */
+.colophon{margin-top:5rem;padding-top:2rem;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;
+  gap:1rem 2.5rem;align-items:baseline;justify-content:space-between;
+  font-family:"EB Garamond",Georgia,serif;font-size:.72rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--mute)}
+.colophon .stats{display:flex;flex-wrap:wrap;gap:.3rem 1.6rem;margin:0;padding:0;list-style:none}
+.colophon b{font-weight:400;color:var(--gold);margin-left:.5rem;letter-spacing:.08em}
+.back{text-decoration:none;color:var(--mute)}
+.back:hover{color:var(--gold)}
+
+@media (max-width:760px){
+  .sheet{width:min(100% - 2rem,63rem)}
+  .hero{grid-template-columns:1fr;gap:1.5rem;padding:3.2rem 0 2.8rem}
+  .hero-rail{flex-direction:row;align-items:center;justify-content:flex-start;gap:.9rem}
+  .hero-rail .vline{width:2.5rem;height:1px;background:linear-gradient(90deg,transparent,var(--gold-soft))}
+  .entry{grid-template-columns:1fr;gap:1rem;padding:2rem 0}
+  .entry-rail{flex-direction:row;align-items:baseline;gap:1rem;padding-top:0}
+  .entry-rail .roman{font-size:.86rem}
+  .specimen-inner{max-width:none}
+  .colophon{flex-direction:column;align-items:flex-start}
+}
+@media (max-width:560px){
+  .mast{flex-direction:column;align-items:flex-start;gap:.85rem}
+  .nav{justify-content:flex-start;gap:.4rem 1.05rem;font-size:.66rem;letter-spacing:.18em}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="sheet">
+  <header class="mast">
+    <a class="brand" href="#">borelo</a>
+    <nav class="nav" aria-label="主导航">
+      <a href="#entries">Recent</a>
+      <a href="#">Archive</a>
+      <a href="#">Categories</a>
+      <a href="#">Tags</a>
+      <a href="#">Atom</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-rail" aria-hidden="true">
+      <span class="vline"></span>
+      <span>Est. MMXXVI</span>
+    </div>
+    <div>
+      <p class="kicker">a journal of small hours</p>
+      <h1 class="hero-title">borelo</h1>
+      <p class="epigraph">文字与影子之间</p>
+    </div>
+  </section>
+
+  <section class="section" id="entries">
+    <header class="section-head">
+      <span class="num">I</span>
+      <h2>Recent Entries</h2>
+      <span class="rule"></span>
+      <span class="year">近作</span>
+    </header>
+
+    <article class="entry">
+      <div class="entry-rail" aria-hidden="true">
+        <span class="roman">II</span>
+        <time datetime="2026-11-08">2026 · 11 · 08</time>
+      </div>
+      <div>
+        <h3><a href="#">夜路</a></h3>
+        <p class="summary">雨后的街道把灯光拉得很长。人影经过，又很快被暗处收回。</p>
+        <p class="meta"><a href="#">随笔</a><span class="dot">·</span>城市<span class="dot">·</span>影像<span class="dot">·</span>12 次阅读</p>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="entry-rail" aria-hidden="true">
+        <span class="roman">I</span>
+        <time datetime="2026-11-01">2026 · 11 · 01</time>
+      </div>
+      <div>
+        <h3><a href="#">欢迎来到 borelo</a></h3>
+        <p class="summary">这是站点的第一篇示例文字，说明如何用 Markdown 发布。</p>
+        <p class="meta"><a href="#">随笔</a><span class="dot">·</span>开篇<span class="dot">·</span>说明<span class="dot">·</span>31 次阅读</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="specimen">
+    <p class="specimen-note">文章页 · Specimen</p>
+    <div class="specimen-inner">
+      <h2>夜路</h2>
+      <p class="sub">2026 年 11 月 8 日 · 随笔</p>
+      <p class="lead">雨后的街道把灯光拉得很长。人影经过，又很快被暗处收回。湿润的路面映着零散的光，像记忆里未完成的底片。</p>
+      <p>不必急着写下结论。有些句子适合留在夜里，等明天再读。观察比命名更先一步，留白也是结构的一部分。</p>
+      <blockquote>雾气与夜色之间，字句慢慢落下。</blockquote>
+      <p>于是这一页不必写满。它在暗处留出的空白，比写下的字更像一个完整的夜晚。</p>
+    </div>
+  </section>
+
+  <footer class="colophon">
+    <ul class="stats">
+      <li>文章<b>2</b></li>
+      <li>分类<b>1</b></li>
+      <li>标签<b>4</b></li>
+      <li>总字数<b>182</b></li>
+      <li>运行<b>0 天</b></li>
+    </ul>
+    <a class="back" href="index.html">← 全部方案</a>
+  </footer>
+</div>
+</body>
+</html>

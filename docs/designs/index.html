@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>borelo · 设计方案</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Serif+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0908;
+  --ink:#ece4d6;
+  --ink-soft:#c6bdaf;
+  --mute:#8d8478;
+  --line:rgba(236,228,214,.16);
+  --gold:#b8985f;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Noto Serif SC",Georgia,serif;font-weight:300;line-height:1.8;letter-spacing:.015em;
+  background-image:radial-gradient(900px 500px at 50% -12%, rgba(184,152,95,.12), transparent 62%);
+  background-attachment:fixed;
+}
+a{color:inherit}
+.wrap{width:min(100% - 2.5rem, 62rem);margin:0 auto;padding:3.6rem 0 5rem}
+
+header.head{text-align:center;padding-bottom:2.6rem;border-bottom:1px solid var(--line)}
+.eyebrow{margin:0;font-family:"EB Garamond",Georgia,serif;font-size:.7rem;letter-spacing:.4em;
+  text-transform:uppercase;color:var(--gold)}
+h1{margin:.9rem 0 0;font-weight:400;font-size:clamp(2.1rem,5vw,3.1rem);letter-spacing:.14em}
+h1 .latin{display:block;font-family:"EB Garamond",Georgia,serif;font-size:.34em;letter-spacing:.5em;
+  color:var(--mute);margin-top:.85rem;text-transform:uppercase}
+.lede{margin:1.6rem auto 0;max-width:34rem;color:var(--ink-soft);font-size:.94rem;line-height:2}
+.lede b{font-weight:400;color:var(--gold)}
+
+.grid{margin-top:3rem;display:grid;gap:2.6rem}
+.card{display:grid;grid-template-columns:minmax(0,1fr) 21rem;gap:2.2rem;align-items:center;text-decoration:none}
+.card .shot{
+  display:block;border:1px solid var(--line);background:#000;overflow:hidden;position:relative;
+  transition:border-color .35s ease, transform .5s cubic-bezier(.22,1,.36,1);
+}
+.card .shot img{display:block;width:100%;height:23rem;object-fit:cover;object-position:top center;
+  filter:brightness(.92);transition:filter .35s ease, transform .8s cubic-bezier(.22,1,.36,1)}
+.card:hover .shot{border-color:rgba(184,152,95,.6);transform:translateY(-2px)}
+.card:hover .shot img{filter:brightness(1);transform:scale(1.012)}
+.card .num{font-family:"EB Garamond",Georgia,serif;font-size:.76rem;letter-spacing:.34em;color:var(--gold)}
+.card h2{margin:.45rem 0 .25rem;font-size:1.5rem;font-weight:400;letter-spacing:.09em;line-height:1.45}
+.card h2 .en{font-family:"EB Garamond",Georgia,serif;font-style:italic;font-size:.72em;color:var(--mute);
+  letter-spacing:.06em;margin-left:.6rem}
+.card p{margin:.7rem 0 0;font-size:.88rem;line-height:2;color:var(--ink-soft)}
+.card .tags{margin:1rem 0 0;font-family:"EB Garamond",Georgia,serif;font-size:.7rem;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.card .tags span{display:inline-block;border:1px solid var(--line);padding:.22rem .6rem;margin:0 .45rem .45rem 0}
+.card .go{display:inline-block;margin-top:1.2rem;font-family:"EB Garamond",Georgia,serif;
+  font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);
+  border-bottom:1px solid transparent;padding-bottom:.25rem;transition:border-color .3s}
+.card:hover .go{border-color:rgba(184,152,95,.6)}
+.card.chosen .shot{border-color:rgba(184,152,95,.55)}
+.badge{display:inline-block;margin-left:.7rem;padding:.1rem .5rem;border:1px solid rgba(184,152,95,.6);
+  font-family:"EB Garamond",Georgia,serif;font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--gold);vertical-align:middle}
+
+.note{margin-top:3.4rem;padding-top:1.6rem;border-top:1px solid var(--line);
+  display:grid;grid-template-columns:1fr 1fr;gap:1.6rem 3rem;
+  font-size:.84rem;line-height:1.95;color:var(--mute)}
+.note h3{margin:0 0 .5rem;font-family:"EB Garamond",Georgia,serif;font-size:.68rem;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft);font-weight:400}
+.note p{margin:0}
+.note code{font-family:ui-monospace,Consolas,monospace;font-size:.86em;color:var(--gold)}
+.note a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(184,152,95,.4)}
+
+@media (max-width:820px){
+  .wrap{width:min(100% - 1.8rem,62rem);padding-top:2.4rem}
+  .card{grid-template-columns:1fr;gap:1rem}
+  .card .shot img{height:15rem}
+  .note{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="head">
+    <p class="eyebrow">borelo · design studies</p>
+    <h1>五版设计<span class="latin">Dark · Classical · Serif</span></h1>
+    <p class="lede">2026 年 11 月做的一轮视觉探索。五版都基于站点的真实内容与统计，各含首页与文章页样张。
+      最终选用 <b>方案 05 · Veil</b>，其结论已落到 <code>static/css/main.css</code>。</p>
+  </header>
+
+  <div class="grid">
+    <a class="card chosen" href="05-veil.html">
+      <span class="shot"><img src="thumb-05-veil.jpg" alt="方案五 Veil 预览"></span>
+      <span>
+        <span class="num">方案 05</span>
+        <h2>Veil<span class="en">帷幕</span><span class="badge">已采用</span></h2>
+        <p>以书籍封面为第一印象。上半失焦的灰白雾面人影，下半深青的湿亮街面，
+          正中米白标题板，整幅覆粗颗粒。全部由 CSS 生成，无位图。</p>
+        <p class="tags"><span>书封构图</span><span>分屏雾与夜</span><span>胶片颗粒</span></p>
+        <span class="go">查看完整页面 →</span>
+      </span>
+    </a>
+
+    <a class="card" href="01-codex.html">
+      <span class="shot"><img src="thumb-01-codex.jpg" alt="方案一 Codex 预览"></span>
+      <span>
+        <span class="num">方案 01</span>
+        <h2>Codex<span class="en">手抄本</span></h2>
+        <p>最克制的一版。左侧竖向导引栏配罗马数字条目，金色细线分隔，正文首字下沉。</p>
+        <p class="tags"><span>EB Garamond</span><span>首字下沉</span><span>金色基调</span></p>
+        <span class="go">查看完整页面 →</span>
+      </span>
+    </a>
+
+    <a class="card" href="02-press.html">
+      <span class="shot"><img src="thumb-02-press.jpg" alt="方案二 Press 预览"></span>
+      <span>
+        <span class="num">方案 02</span>
+        <h2>Press<span class="en">文学刊物</span></h2>
+        <p>报纸与文学期刊的骨架。Playfair Display 大字刊头，目录式条目配 Folio 页码，
+          页脚做成版权页。</p>
+        <p class="tags"><span>Playfair Display</span><span>目录排版</span><span>版权页</span></p>
+        <span class="go">查看完整页面 →</span>
+      </span>
+    </a>
+
+    <a class="card" href="03-illuminated.html">
+      <span class="shot"><img src="thumb-03-illuminated.jpg" alt="方案三 Illuminated 预览"></span>
+      <span>
+        <span class="num">方案 03</span>
+        <h2>Illuminated<span class="en">泥金手抄</span></h2>
+        <p>最具装饰性。双层金线书框、四角饰钉、居中标题页与花饰分隔符。</p>
+        <p class="tags"><span>Cormorant</span><span>金色书框</span><span>花饰分隔</span></p>
+        <span class="go">查看完整页面 →</span>
+      </span>
+    </a>
+
+    <a class="card" href="04-quarto.html">
+      <span class="shot"><img src="thumb-04-quarto.jpg" alt="方案四 Quarto 预览"></span>
+      <span>
+        <span class="num">方案 04</span>
+        <h2>Quarto<span class="en">四开本</span></h2>
+        <p>现代编辑设计。固定竖脊标站名，Libre Baskerville 重字重配锈红点缀，
+          等宽字体做编号与元数据。</p>
+        <p class="tags"><span>Libre Baskerville</span><span>竖脊导航</span><span>锈红点缀</span></p>
+        <span class="go">查看完整页面 →</span>
+      </span>
+    </a>
+  </div>
+
+  <div class="note">
+    <div>
+      <h3>关于这些文件</h3>
+      <p>五份独立的单文件 HTML，直接双击可开，不依赖站点代码。字体走 Google Fonts，
+        断网时回退到系统衬线体。这些是设计留档，不参与构建。</p>
+    </div>
+    <div>
+      <h3>回到站点</h3>
+      <p>当前实现见 <a href="../../README.md">README</a> 中的预览图，
+        样式在 <code>static/css/main.css</code>。</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
