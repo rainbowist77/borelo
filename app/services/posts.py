@@ -9,9 +9,9 @@ from pathlib import Path
 from typing import Any
 
 import frontmatter
-import markdown as md
 
 import config
+from app.services import markdown_render, times
 
 _cache: dict[str, Any] = {"mtime": None, "posts": []}
 
@@ -24,7 +24,8 @@ _LATIN_RE = re.compile(r"[A-Za-z0-9]+(?:['’\-][A-Za-z0-9]+)*")
 class Post:
     slug: str
     title: str
-    date: date
+    published: datetime
+    updated: datetime
     categories: list[str] = field(default_factory=list)
     tags: list[str] = field(default_factory=list)
     summary: str = ""
@@ -34,21 +35,29 @@ class Post:
     path: Path | None = None
 
     @property
+    def date(self) -> date:
+        return self.published.date()
+
+    @property
     def date_iso(self) -> str:
         return self.date.isoformat()
 
+    @property
+    def published_rfc3339(self) -> str:
+        return times.rfc3339(self.published)
 
-def _parse_date(value: Any) -> date:
-    if isinstance(value, datetime):
-        return value.date()
-    if isinstance(value, date):
-        return value
-    if isinstance(value, str) and value.strip():
-        try:
-            return date.fromisoformat(value.strip()[:10])
-        except ValueError:
-            return date.today()
-    return date.today()
+    @property
+    def updated_rfc3339(self) -> str:
+        return times.rfc3339(self.updated)
+
+    @property
+    def body_html_absolute(self) -> str:
+        """Body HTML with image and link targets made absolute.
+
+        Used by the Atom feed, whose consumers render our markup off-site
+        where root-relative URLs would point at the wrong origin.
+        """
+        return markdown_render.render(self.body_text, base_url=config.BASE_URL)
 
 
 def _as_list(value: Any) -> list[str]:
@@ -83,15 +92,25 @@ def _load_post(path: Path) -> Post | None:
 
     slug = path.stem
     title = str(post.get("title") or slug)
-    post_date = _parse_date(post.get("date"))
+
+    # Frontmatter is authoritative for publication time, down to the minute.
+    # If it is missing or unreadable, fall back to the file's own mtime so a
+    # post always has a stable position in the stream.
+    stat = path.stat()
+    published = times.parse_moment(post.get("date") or post.get("published"))
+    if published is None:
+        published = times.from_timestamp(stat.st_mtime)
+
+    # Modification time is the file's mtime, never frontmatter.
+    updated = times.from_timestamp(stat.st_mtime)
+    if updated < published:
+        updated = published
+
     categories = _as_list(post.get("categories") or post.get("category"))
     tags = _as_list(post.get("tags") or post.get("tag"))
     summary = str(post.get("summary") or "").strip()
     body = post.content or ""
-    body_html = md.markdown(
-        body,
-        extensions=["fenced_code", "tables", "smarty", "toc"],
-    )
+    body_html = markdown_render.render(body)
     if not summary:
         plain = " ".join(body.split())
         limit = config.SUMMARY_LENGTH
@@ -100,7 +119,8 @@ def _load_post(path: Path) -> Post | None:
     return Post(
         slug=slug,
         title=title,
-        date=post_date,
+        published=published,
+        updated=updated,
         categories=categories,
         tags=tags,
         summary=summary,
@@ -129,7 +149,9 @@ def load_posts(*, force: bool = False) -> list[Post]:
             item = _load_post(path)
             if item:
                 collected.append(item)
-    collected.sort(key=lambda p: (p.date, p.slug), reverse=True)
+    # Newest first, by minute-accurate publication time rather than by date,
+    # so several posts on the same day keep the order they were written in.
+    collected.sort(key=lambda p: (p.published, p.slug), reverse=True)
     _cache["mtime"] = mtime
     _cache["posts"] = collected
     return list(collected)

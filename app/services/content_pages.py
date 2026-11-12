@@ -11,9 +11,9 @@ from pathlib import Path
 from typing import Any
 
 import frontmatter
-import markdown as md
 
 import config
+from app.services import markdown_render
 
 _cache: dict[str, tuple[float, dict[str, Any] | None]] = {}
 
@@ -43,10 +43,7 @@ def load_page(slug: str) -> dict[str, Any] | None:
         "slug": slug,
         "title": str(doc.get("title") or slug),
         "summary": str(doc.get("summary") or "").strip(),
-        "body_html": md.markdown(
-            body,
-            extensions=["fenced_code", "tables", "smarty", "toc"],
-        ),
+        "body_html": markdown_render.render(body),
     }
     _cache[slug] = (mtime, page)
     return page

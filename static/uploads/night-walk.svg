@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="夜路：雾与街灯的示意图">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d4cec3"/>
+      <stop offset="52%" stop-color="#8f8a83"/>
+      <stop offset="100%" stop-color="#33312f"/>
+    </linearGradient>
+    <linearGradient id="street" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2d5a63"/>
+      <stop offset="55%" stop-color="#0c2831"/>
+      <stop offset="100%" stop-color="#040f14"/>
+    </linearGradient>
+    <radialGradient id="lamp" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#cfe6ea" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#cfe6ea" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="mass" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#141514"/>
+      <stop offset="100%" stop-color="#141514" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+
+  <rect width="1200" height="360" fill="url(#sky)"/>
+  <rect y="360" width="1200" height="270" fill="url(#street)"/>
+
+  <ellipse cx="300" cy="300" rx="260" ry="300" fill="#151614" opacity="0.55" filter="url(#soft)"/>
+  <ellipse cx="1000" cy="240" rx="190" ry="330" fill="#0d0e0d" opacity="0.8" filter="url(#soft)"/>
+
+  <ellipse cx="240" cy="470" rx="330" ry="42" fill="url(#lamp)"/>
+  <ellipse cx="820" cy="520" rx="280" ry="30" fill="url(#lamp)" opacity="0.6"/>
+
+  <rect x="40" y="40" width="1120" height="2" fill="#f3f0e9" opacity="0.18"/>
+
+  <text x="600" y="120" text-anchor="middle" font-family="Georgia, serif" font-size="34"
+        fill="#f3f0e9" opacity="0.82" letter-spacing="10">BORELO</text>
+  <text x="600" y="164" text-anchor="middle" font-family="Georgia, serif" font-size="16"
+        fill="#f3f0e9" opacity="0.5" letter-spacing="6">A QUIET JOURNAL</text>
+</svg>

@@ -21,10 +21,10 @@
       if (el) layers.push({ el: el, depth: depth });
     }
 
-    track(".figure-left", -1);
-    track(".figure-mid", 0.5);
-    track(".figure-right", 1);
-    track(".reflect", 0.3);
+    track(".figure-left", -1.15);
+    track(".figure-mid", 0.6);
+    track(".figure-right", 1.15);
+    track(".reflect", 0.4);
 
     if (layers.length) {
       cover.addEventListener(
@@ -36,8 +36,8 @@
 
           for (var i = 0; i < layers.length; i++) {
             var layer = layers[i];
-            var x = nx * 13 * layer.depth;
-            var y = ny * 8 * layer.depth;
+            var x = nx * 26 * layer.depth;
+            var y = ny * 15 * layer.depth;
             layer.el.style.translate =
               x.toFixed(2) + "px " + y.toFixed(2) + "px";
           }
@@ -57,7 +57,11 @@
     }
   }
 
-  /* ─────────────────────── entries: reveal on scroll ─────────────────────── */
+  /* ─────────────────────── entries: float on every pass ───────────────────────
+     Unlike a once-only reveal, entries re-arm when they leave the viewport,
+     so scrolling back up replays the movement. Two separate thresholds act
+     as hysteresis: an entry only re-arms once it is fully clear of the
+     viewport, which keeps a row sitting on the boundary from flickering. */
 
   var entries = document.querySelectorAll(".entry");
 
@@ -70,20 +74,23 @@
     return;
   }
 
-  var reveal = new IntersectionObserver(
+  var observer = new IntersectionObserver(
     function (records) {
       records.forEach(function (record) {
-        if (!record.isIntersecting) return;
-        record.target.classList.add("is-visible");
-        reveal.unobserve(record.target);
+        if (record.isIntersecting) {
+          record.target.classList.add("is-visible");
+        } else {
+          record.target.classList.remove("is-visible");
+        }
       });
     },
-    { threshold: 0.12, rootMargin: "0px 0px -6% 0px" }
+    // Shrink the root so a row must be meaningfully on screen before it
+    // floats in, and must leave entirely before it re-arms.
+    { threshold: 0, rootMargin: "-8% 0px -12% 0px" }
   );
 
   for (var j = 0; j < entries.length; j++) {
-    // Stagger the first few; beyond that the delay stops accumulating.
-    entries[j].style.transitionDelay = Math.min(j * 90, 360) + "ms";
-    reveal.observe(entries[j]);
+    entries[j].style.transitionDelay = Math.min(j * 80, 320) + "ms";
+    observer.observe(entries[j]);
   }
 })();

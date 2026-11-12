@@ -5,6 +5,9 @@ services:
       - "80:80"
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      # nginx serves /static/uploads and /static straight from disk; the
+      # alias paths in default.conf point at this mount.
+      - ./static:/srv/static:ro
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped

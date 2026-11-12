@@ -1,0 +1,2 @@
+# Keep this directory in git. Drop images referenced from Markdown here and
+# point to them as /static/uploads/<file>.

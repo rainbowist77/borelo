@@ -126,6 +126,26 @@ h3 {
   color: var(--light);
 }
 
+/* Bridge the wet-street teal into the ink of the page below. Without this
+   the cover ends on a hard horizontal seam where two near-blacks meet. */
+.cover::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 18rem;
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 12, 13, 0) 0%,
+    rgba(10, 12, 13, 0.35) 38%,
+    rgba(10, 12, 13, 0.78) 72%,
+    var(--paper) 100%
+  );
+}
+
 /* ── the split scene ── */
 
 .scene {
@@ -162,7 +182,6 @@ h3 {
     linear-gradient(180deg, #2d5a63 0%, #173d47 26%, #0c2831 56%, #06191f 84%, #040f14 100%);
 }
 
-/* wet-street reflections */
 /* wet-street reflections. The shimmer is a slow brightness and drift; the
    pointer parallax from home.js rides on `translate`. */
 .reflect {
@@ -179,11 +198,11 @@ h3 {
 
 @keyframes reflect-breathe {
   from {
-    transform: translate3d(0, 0, 0) scale(1);
-    opacity: 0.72;
+    transform: translate3d(-14px, 0, 0) scale(1);
+    opacity: 0.6;
   }
   to {
-    transform: translate3d(10px, 4px, 0) scale(1.03);
+    transform: translate3d(16px, 6px, 0) scale(1.05);
     opacity: 1;
   }
 }
@@ -220,12 +239,12 @@ h3 {
 
 @keyframes glint {
   from {
-    opacity: 0.26;
-    transform: translate3d(-8px, 0, 0) scaleX(0.96);
+    opacity: 0.14;
+    transform: translate3d(-22px, 0, 0) scaleX(0.88) scaleY(0.85);
   }
   to {
-    opacity: 0.62;
-    transform: translate3d(10px, 1px, 0) scaleX(1.06);
+    opacity: 0.78;
+    transform: translate3d(24px, 2px, 0) scaleX(1.14) scaleY(1.12);
   }
 }
 
@@ -280,7 +299,7 @@ h3 {
   position: absolute;
   z-index: 1;
   animation: figure-drift 22s ease-in-out infinite alternate;
-  transition: translate 0.9s var(--ease);
+  transition: translate 0.75s var(--ease);
   will-change: transform, translate;
 }
 
@@ -296,10 +315,10 @@ h3 {
 
 @keyframes figure-drift {
   from {
-    transform: translate3d(-6px, 3px, 0) scale(1);
+    transform: translate3d(-16px, 8px, 0) scale(1);
   }
   to {
-    transform: translate3d(7px, -4px, 0) scale(1.015);
+    transform: translate3d(18px, -11px, 0) scale(1.045);
   }
 }
 
@@ -768,13 +787,13 @@ h3 {
   padding: 2.5rem 0;
   border-bottom: 1px solid var(--line-soft);
 
-  /* Revealed by home.js on scroll. Without JS the .no-js fallback below
-     keeps the entries visible. */
+  /* Revealed by home.js each time a row enters the viewport, and reset when
+     it leaves. Without JS the .no-js fallback below keeps them visible. */
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(30px);
   transition:
-    opacity 0.75s var(--ease),
-    transform 0.75s var(--ease);
+    opacity 0.85s var(--ease),
+    transform 0.85s var(--ease);
 }
 
 .entry.is-visible {
@@ -1100,6 +1119,171 @@ h3 {
   font-weight: 500;
   color: var(--light);
   letter-spacing: 0.08em;
+}
+
+/* Column alignment comes from the `tables` extension's style attribute. */
+.prose th[style*="text-align: center"],
+.prose td[style*="text-align: center"] {
+  text-align: center;
+}
+
+.prose th[style*="text-align: right"],
+.prose td[style*="text-align: right"] {
+  text-align: right;
+}
+
+/* ── definition lists ── */
+
+.prose dl {
+  margin: 0 0 1.6rem;
+}
+
+.prose dt {
+  margin-top: 1.1rem;
+  color: var(--light);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.prose dt:first-child {
+  margin-top: 0;
+}
+
+.prose dd {
+  margin: 0.3rem 0 0 1.2rem;
+  padding-left: 0.9rem;
+  border-left: 1px solid var(--line-soft);
+  color: var(--light-soft);
+}
+
+/* ── footnotes ── */
+
+.prose .footnote {
+  margin-top: 2.8rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.86rem;
+  line-height: 1.95;
+  color: var(--mute);
+}
+
+.prose .footnote hr {
+  display: none;
+}
+
+.prose .footnote ol {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.prose .footnote li {
+  margin-bottom: 0.5rem;
+}
+
+.prose sup {
+  font-size: 0.72em;
+  line-height: 0;
+  vertical-align: super;
+}
+
+.prose sup a {
+  text-decoration: none;
+  border-bottom: 0;
+  color: var(--brass);
+  padding: 0 0.1em;
+}
+
+.prose .footnote-backref {
+  margin-left: 0.35em;
+  text-decoration: none;
+  border-bottom: 0;
+  color: var(--brass-soft);
+}
+
+/* ── admonitions ── */
+
+.prose .admonition {
+  margin: 2rem 0;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--line-soft);
+  border-left: 2px solid var(--brass-soft);
+  background: rgba(183, 154, 103, 0.05);
+}
+
+.prose .admonition-title {
+  margin: 0 0 0.6rem;
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+.prose .admonition > p:last-child {
+  margin-bottom: 0;
+}
+
+.prose .admonition.warning {
+  border-left-color: rgba(180, 89, 63, 0.75);
+  background: rgba(180, 89, 63, 0.06);
+}
+
+.prose .admonition.warning .admonition-title {
+  color: #c9705a;
+}
+
+/* ── inline extras ── */
+
+.prose kbd {
+  font-family: var(--mono);
+  font-size: 0.82em;
+  padding: 0.1em 0.42em;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 3px;
+  background: rgba(232, 230, 224, 0.05);
+  color: var(--light);
+}
+
+.prose mark {
+  background: rgba(183, 154, 103, 0.24);
+  color: var(--light);
+  padding: 0.05em 0.25em;
+}
+
+.prose del {
+  color: var(--mute);
+  text-decoration-color: rgba(183, 154, 103, 0.65);
+  text-decoration-thickness: 1px;
+}
+
+.prose abbr[title] {
+  text-decoration: underline dotted var(--brass-soft);
+  text-underline-offset: 0.24em;
+  cursor: help;
+}
+
+/* Heading permalinks injected by the `toc` extension. */
+.prose .headerlink {
+  margin-left: 0.5em;
+  font-size: 0.72em;
+  text-decoration: none;
+  border-bottom: 0;
+  color: var(--brass-soft);
+  opacity: 0;
+  transition: opacity 0.25s var(--ease);
+}
+
+.prose h2:hover .headerlink,
+.prose h3:hover .headerlink,
+.prose .headerlink:focus-visible {
+  opacity: 1;
+}
+
+.prose .markdown-demo {
+  margin: 0 0 1.6rem;
+  padding: 1rem 1.25rem;
+  border: 1px dashed var(--line);
 }
 
 /* ── engagement ── */
